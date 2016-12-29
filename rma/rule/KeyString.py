@@ -47,7 +47,8 @@ class KeyString(object):
         for pattern, data in keys.items():
             used_bytes_iter, aligned_iter, encoding_iter = tee(
                     progress_iterator((StringEntry(value=x["name"]) for x in data), progress), 3)
-
+            
+       
             total_elements = len(data)
             if total_elements == 0:
                 continue

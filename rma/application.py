@@ -108,7 +108,7 @@ class RmaApplication(object):
 
             print("\r\nAggregating keys by pattern and type")
             keys = {k: self.get_pattern_aggregated_data(v) for k, v in keys.items()}
-
+            
             print("\r\nApply rules")
             if self.behaviour == 'global' or is_all:
                 str_res += self.do_globals()
@@ -123,7 +123,6 @@ class RmaApplication(object):
         res = ['Server stat']
         for glob in self.globals:
             res += glob.analyze()
-
         return res
 
     def do_scanner(self, r, res):
@@ -131,6 +130,7 @@ class RmaApplication(object):
             'headers': ['Match', "Count", "Type", "%"],
             'data': []
         }
+        
         total = min(r.dbsize(), self.limit)
         for key, aggregate_patterns in res.items():
             self.logger.debug("Processing type %s" % type_id_to_redis_type(key))

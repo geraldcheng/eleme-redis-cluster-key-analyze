@@ -84,12 +84,18 @@ class Scanner(object):
             total = 0
             for key_tuple in self.batch_scan():
                 key_info, key_name = key_tuple
-                key_type, key_encoding = key_info
+                key_type, key_encoding = key_info['type'],key_info['encoding']
                 if not key_name:
                     self.logger.warning(
                         '\r\nWarning! Scan iterator return key with empty name `` and type %s', key_type)
                     continue
-
+                
+                #print("accepted_types:",self.accepted_types)
+                #print("key_tuple:",key_tuple)
+                #print("key_info:",key_info)
+                #print("key_name:",key_name)
+                #print("key_type",key_type)
+                #print("key_encoding:",key_encoding)
                 to_id = redis_type_to_id(key_type)
                 if to_id in self.accepted_types:
                     key_info_obj = {
@@ -98,7 +104,6 @@ class Scanner(object):
                         'encoding': redis_encoding_str_to_id(key_encoding)
                     }
                     yield key_info_obj
-
                 progress.update()
 
                 total += 1
